@@ -1,0 +1,15 @@
+POST http://localhost:5000/creategame HTTP/1.1
+Content-Type: application/json
+
+{
+    "names":{
+        "game":"asdf",
+        "blue":"BLUETEAM",
+        "red":"REDTEAM"
+    },
+    "time":{
+        "pick": 30,
+        "swap": 30,
+        "ban": 30
+    }
+}
