@@ -6,6 +6,8 @@ export enum phase {
   END,
 }
 
+export type team = "RED" | "BLUE" | "ALL";
+
 export interface banpickEach {
   championId: number;
   doing: boolean;
@@ -25,9 +27,13 @@ export interface banpick {
   setting: gameSetting;
   status: {
     phase: phase;
-    team: "RED" | "BLUE" | "ALL";
+    team: team;
     number: number;
     endTime: number;
+    isReady: {
+      blue: boolean;
+      red: boolean;
+    };
   };
   pick: {
     blue: banpickTeam;

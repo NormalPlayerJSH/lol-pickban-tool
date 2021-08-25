@@ -1,5 +1,5 @@
 import { banpick, banpicks, gameSetting, phase } from "../model/data";
-import md5 from "md5";
+import crypto from "crypto";
 import { randomName } from "./randomName";
 
 export class banpickData {
@@ -11,7 +11,11 @@ export class banpickData {
   getNewId() {
     while (true) {
       const randNum = Math.floor(Math.random() * 99999999);
-      const encrypted = md5(randNum.toString());
+      const beforeEncrypt = `${Date.now()} ${randNum}`;
+      const encrypted = crypto
+        .createHash("sha512")
+        .update(beforeEncrypt)
+        .digest("base64");
       if (!(encrypted in this.data)) {
         return encrypted;
       }
@@ -28,6 +32,10 @@ export class banpickData {
         team: "ALL",
         endTime: -1,
         number: 0,
+        isReady: {
+          blue: false,
+          red: false,
+        },
       },
       pick: {
         blue: {
@@ -135,5 +143,11 @@ export class banpickData {
       blueCode,
       redCode,
     };
+  }
+  getGameInfo(id: string) {
+    if (!(id in this.data)) {
+      return { err: "해당 게임을 찾을 수 없습니다." };
+    }
+    return { ans: this.data[id] };
   }
 }

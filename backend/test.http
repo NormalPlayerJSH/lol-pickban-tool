@@ -8,8 +8,8 @@ Content-Type: application/json
         "red":"REDTEAM"
     },
     "time":{
-        "pick": 30,
-        "swap": 30,
-        "ban": 30
+        "pick": 10,
+        "swap": 10,
+        "ban": 10
     }
 }
