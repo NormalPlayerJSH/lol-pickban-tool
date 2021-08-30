@@ -1,5 +1,6 @@
 import { randomFirst, randomLast } from "./randomNameList";
-import { code } from "../model/data";
+import getRandomElement from "./random";
+import { code } from "../../../model/data";
 
 export class randomName {
   firstToNum: { [x: string]: number } = {};
@@ -24,15 +25,11 @@ export class randomName {
       });
     });
   }
-  getRandomElement<T>(lis: Array<T>) {
-    const len = lis.length;
-    const randNum = Math.floor(Math.random() * len);
-    return lis[randNum];
-  }
+
   getRandomCode(code: code) {
     while (true) {
-      const firstStr = this.getRandomElement(randomFirst);
-      const lastStr = this.getRandomElement(randomLast);
+      const firstStr = getRandomElement(randomFirst);
+      const lastStr = getRandomElement(randomLast);
       const firstNum = this.firstToNum[firstStr];
       const lastNum = this.lastToNum[lastStr];
       if (this.data[firstNum][lastNum].id === "") {

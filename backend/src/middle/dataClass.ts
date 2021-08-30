@@ -1,4 +1,4 @@
-import { banpick, banpicks, gameSetting, phase } from "../model/data";
+import { banpick, banpicks, gameSetting, phase } from "../../../model/data";
 import crypto from "crypto";
 import { randomName } from "./randomName";
 
@@ -39,94 +39,34 @@ export class banpickData {
       },
       pick: {
         blue: {
-          1: {
-            championId: 0,
-            doing: false,
-          },
-          2: {
-            championId: 0,
-            doing: false,
-          },
-          3: {
-            championId: 0,
-            doing: false,
-          },
-          4: {
-            championId: 0,
-            doing: false,
-          },
-          5: {
-            championId: 0,
-            doing: false,
-          },
+          1: 0,
+          2: 0,
+          3: 0,
+          4: 0,
+          5: 0,
         },
         red: {
-          1: {
-            championId: 0,
-            doing: false,
-          },
-          2: {
-            championId: 0,
-            doing: false,
-          },
-          3: {
-            championId: 0,
-            doing: false,
-          },
-          4: {
-            championId: 0,
-            doing: false,
-          },
-          5: {
-            championId: 0,
-            doing: false,
-          },
+          1: 0,
+          2: 0,
+          3: 0,
+          4: 0,
+          5: 0,
         },
       },
       ban: {
         blue: {
-          1: {
-            championId: 0,
-            doing: false,
-          },
-          2: {
-            championId: 0,
-            doing: false,
-          },
-          3: {
-            championId: 0,
-            doing: false,
-          },
-          4: {
-            championId: 0,
-            doing: false,
-          },
-          5: {
-            championId: 0,
-            doing: false,
-          },
+          1: 0,
+          2: 0,
+          3: 0,
+          4: 0,
+          5: 0,
         },
         red: {
-          1: {
-            championId: 0,
-            doing: false,
-          },
-          2: {
-            championId: 0,
-            doing: false,
-          },
-          3: {
-            championId: 0,
-            doing: false,
-          },
-          4: {
-            championId: 0,
-            doing: false,
-          },
-          5: {
-            championId: 0,
-            doing: false,
-          },
+          1: 0,
+          2: 0,
+          3: 0,
+          4: 0,
+          5: 0,
         },
       },
     };

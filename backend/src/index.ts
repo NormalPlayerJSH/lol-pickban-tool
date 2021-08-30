@@ -3,7 +3,9 @@ import http from "http";
 import { Server, Socket } from "socket.io";
 import { banpickData } from "./middle/dataClass";
 import { json as bpJSON } from "body-parser";
-import { banpick, code, phase, team } from "./model/data";
+import ChampMeta from "../../model/ChampMeta";
+import { banpick, code, phase, team } from "../../model/data";
+import getRandomElement from "./middle/random";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 const app = express();
 const server = http.createServer(app);
@@ -11,6 +13,8 @@ const io = new Server(server);
 const port = process.env.PORT || 5000;
 const bpData = new banpickData();
 const rName = bpData.randomName;
+
+const champList = Object.keys(ChampMeta).map((key) => parseInt(key));
 
 class customSocket extends Socket<
   DefaultEventsMap,
@@ -44,6 +48,11 @@ server.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
+const teamToSide = (team: team) => {
+  if (team === "BLUE") return "blue";
+  return "red";
+};
+
 const statusUpdatePush = (id: string) => {
   const { ans } = bpData.getGameInfo(id);
   if (ans) {
@@ -64,6 +73,42 @@ const isSameStatus = (
   );
 };
 
+const setRandomChamp = (gameInfo: banpick, team: team, number: number) => {
+  const used: number[] = [];
+  const lis: (1 | 2 | 3 | 4 | 5)[] = [1, 2, 3, 4, 5];
+  const pickban: ("pick" | "ban")[] = ["pick", "ban"];
+  const side: ("red" | "blue")[] = ["red", "blue"];
+  const { status } = gameInfo;
+  let randomChamp = -1;
+  const isSamePhase = (
+    action: "pick" | "ban",
+    actionSide: "red" | "blue",
+    num: 1 | 2 | 3 | 4 | 5
+  ) => {
+    const actionSame =
+      (action === "pick" && status.phase === phase.PICK) ||
+      (action === "ban" && status.phase === phase.BAN);
+    const sideSame = teamToSide(status.team) === actionSide;
+    const numberSame = num === status.number;
+    return actionSame && sideSame && numberSame;
+  };
+  lis.map((num) => {
+    pickban.map((action) => {
+      side.map((actionSide) => {
+        const championId = gameInfo[action][actionSide][num];
+        if (!isSamePhase(action, actionSide, num) && championId != 0) {
+          used.push(championId);
+        }
+      });
+    });
+  });
+  while (true) {
+    randomChamp = getRandomElement(champList);
+    if (randomChamp != 0 && !(randomChamp in used)) break;
+  }
+  gameInfo.pick[teamToSide(team)][number as 1 | 2 | 3 | 4 | 5] = randomChamp;
+};
+
 const endHandler = (
   endStatus: { phase: phase; team: team; number: number },
   id: string
@@ -72,6 +117,13 @@ const endHandler = (
   if (ans) {
     const { status } = ans;
     if (isSameStatus(endStatus, status)) {
+      const { phase: ePhase, team, number } = endStatus;
+      if (
+        ePhase === phase.PICK &&
+        ans.pick[teamToSide(team)][number as 1 | 2 | 3 | 4 | 5] === 0
+      ) {
+        setRandomChamp(ans, endStatus.team, endStatus.number);
+      }
       goNextTurn(ans);
       statusUpdatePush(id);
     }
@@ -79,7 +131,7 @@ const endHandler = (
 };
 
 function goNextTurn(gameInfo: banpick) {
-  const { status, setting, id } = gameInfo;
+  const { status, setting, id, ban, pick } = gameInfo;
 
   const changeStatus = (phase: number, team: team, number: number) => {
     status.phase = phase;
@@ -217,6 +269,35 @@ const completeHandler = (
   }
 };
 
+const selectHandler = (
+  socket: customSocket,
+  data: {
+    status: {
+      team: team;
+      phase: phase.BAN | phase.PICK;
+      number: number;
+    };
+    championId: number;
+  }
+) => {
+  const id = getGameInfoId(socket);
+  const { ans } = bpData.getGameInfo(id);
+  if (ans) {
+    const { status, championId } = data;
+    const {
+      team: statusTeam,
+      phase: statusPhase,
+      number: statusNumber,
+    } = status;
+    if (isSameStatus(status, ans.status)) {
+      const action = statusPhase === phase.BAN ? "ban" : "pick";
+      ans[action][teamToSide(statusTeam)][statusNumber as 1 | 2 | 3 | 4 | 5] =
+        championId;
+      statusUpdatePush(id);
+    }
+  }
+};
+
 io.on("connection", (socket) => {
   socket.on("asdf", (data) => {
     //console.log(data);
@@ -225,4 +306,5 @@ io.on("connection", (socket) => {
   socket.on("join", (data) => joinChecker(socket, data));
   socket.on("ready", (data) => readyChcker(socket, data));
   socket.on("complete", (data) => completeHandler(socket, data));
+  socket.on("select", (data) => selectHandler(socket, data));
 });

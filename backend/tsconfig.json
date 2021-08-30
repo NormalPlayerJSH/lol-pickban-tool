@@ -16,7 +16,7 @@
       "resolveJsonModule": true, /* .json 확장자로 import된 모듈을 포함 */
     },
     "include": [
-      "./src/**/*",
+      "./src/**/*", "../model",
     ],
     "exclude": [
       "node_modules",
