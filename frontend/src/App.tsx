@@ -1,34 +1,24 @@
 import React, { useEffect } from "react";
+import { Route, Switch } from "react-router-dom";
 import io from "socket.io-client";
 import logo from "./logo.svg";
+import Banpick from "./Pages/Banpick/Banpick";
+import Create from "./Pages/Create/Create";
+import Main from "./Pages/Main/Main";
+import Join from "./Pages/Join/Join";
+import Error from "./Pages/Error/Error";
 import "./App.css";
 
 function App() {
-  useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-    const socket = io();
-    console.log(socket);
-    socket.emit("asdf", { sadf: "asdf" });
-    socket.on("dd", (data) => console.log(data));
-  }, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Switch>
+        <Route path="/" component={Main} exact />
+        <Route path="/join" component={Join} exact />
+        <Route path="/create" component={Create} exact />
+        <Route path="/banpick/:code" component={Banpick} exact />
+        <Route component={Error} />
+      </Switch>
     </div>
   );
 }
