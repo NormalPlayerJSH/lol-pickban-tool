@@ -51,7 +51,7 @@ export class randomName {
     }
     const firstStr = lis[0];
     const lastStr = lis[1];
-    if (!(firstStr in this.firstToNum) && !(lastStr in this.lastToNum)) {
+    if (!(firstStr in this.firstToNum) || !(lastStr in this.lastToNum)) {
       return {
         err: "존재하지 않는 코드 단어입니다.",
       };

@@ -299,6 +299,7 @@ const selectHandler = (
 };
 
 io.on("connection", (socket) => {
+  console.log(socket.id);
   socket.on("asdf", (data) => {
     //console.log(data);
     socket.emit("dd", data);
