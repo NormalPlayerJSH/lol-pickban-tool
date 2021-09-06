@@ -4,7 +4,15 @@ import { Server, Socket } from "socket.io";
 import { banpickData } from "./middle/dataClass";
 import { json as bpJSON } from "body-parser";
 import ChampMeta from "../../model/ChampMeta";
-import { banpick, code, phase, team } from "../../model/data";
+import { banpick, code, phase, team, banpickNum } from "../../model/data";
+import {
+  eventType,
+  joinData,
+  readyData,
+  completeData,
+  selectData,
+  swapData,
+} from "../../model/socketEvent";
 import getRandomElement from "./middle/random";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 const app = express();
@@ -75,7 +83,7 @@ const isSameStatus = (
 
 const setRandomChamp = (gameInfo: banpick, team: team, number: number) => {
   const used: number[] = [];
-  const lis: (1 | 2 | 3 | 4 | 5)[] = [1, 2, 3, 4, 5];
+  const lis: banpickNum[] = [1, 2, 3, 4, 5];
   const pickban: ("pick" | "ban")[] = ["pick", "ban"];
   const side: ("red" | "blue")[] = ["red", "blue"];
   const { status } = gameInfo;
@@ -83,7 +91,7 @@ const setRandomChamp = (gameInfo: banpick, team: team, number: number) => {
   const isSamePhase = (
     action: "pick" | "ban",
     actionSide: "red" | "blue",
-    num: 1 | 2 | 3 | 4 | 5
+    num: banpickNum
   ) => {
     const actionSame =
       (action === "pick" && status.phase === phase.PICK) ||
@@ -106,7 +114,7 @@ const setRandomChamp = (gameInfo: banpick, team: team, number: number) => {
     randomChamp = getRandomElement(champList);
     if (randomChamp != 0 && !(randomChamp in used)) break;
   }
-  gameInfo.pick[teamToSide(team)][number as 1 | 2 | 3 | 4 | 5] = randomChamp;
+  gameInfo.pick[teamToSide(team)][number as banpickNum] = randomChamp;
 };
 
 const endHandler = (
@@ -120,7 +128,7 @@ const endHandler = (
       const { phase: ePhase, team, number } = endStatus;
       if (
         ePhase === phase.PICK &&
-        ans.pick[teamToSide(team)][number as 1 | 2 | 3 | 4 | 5] === 0
+        ans.pick[teamToSide(team)][number as banpickNum] === 0
       ) {
         setRandomChamp(ans, endStatus.team, endStatus.number);
       }
@@ -201,7 +209,7 @@ function goNextTurn(gameInfo: banpick) {
   else if (status.phase === phase.SWAP) changeTimer("swap");
 }
 
-const joinChecker = (socket: customSocket, data: { code: string }) => {
+const joinChecker = (socket: customSocket, data: joinData) => {
   const { code } = data;
   const { err, ans } = rName.codeToId(code);
   if (err) {
@@ -222,10 +230,7 @@ const joinChecker = (socket: customSocket, data: { code: string }) => {
   }
 };
 
-const readyChcker = (
-  socket: customSocket,
-  data: { team: string; isReady: boolean }
-) => {
+const readyChcker = (socket: customSocket, data: readyData) => {
   const id = getGameInfoId(socket);
   const { team, isReady } = data;
   const { ans } = bpData.getGameInfo(id);
@@ -247,16 +252,7 @@ const readyChcker = (
   }
 };
 
-const completeHandler = (
-  socket: customSocket,
-  data: {
-    status: {
-      team: team;
-      phase: phase;
-      number: number;
-    };
-  }
-) => {
+const completeHandler = (socket: customSocket, data: completeData) => {
   const id = getGameInfoId(socket);
   const { status } = data;
   const { ans } = bpData.getGameInfo(id);
@@ -269,17 +265,7 @@ const completeHandler = (
   }
 };
 
-const selectHandler = (
-  socket: customSocket,
-  data: {
-    status: {
-      team: team;
-      phase: phase.BAN | phase.PICK;
-      number: number;
-    };
-    championId: number;
-  }
-) => {
+const selectHandler = (socket: customSocket, data: selectData) => {
   const id = getGameInfoId(socket);
   const { ans } = bpData.getGameInfo(id);
   if (ans) {
@@ -291,20 +277,14 @@ const selectHandler = (
     } = status;
     if (isSameStatus(status, ans.status)) {
       const action = statusPhase === phase.BAN ? "ban" : "pick";
-      ans[action][teamToSide(statusTeam)][statusNumber as 1 | 2 | 3 | 4 | 5] =
+      ans[action][teamToSide(statusTeam)][statusNumber as banpickNum] =
         championId;
       statusUpdatePush(id);
     }
   }
 };
 
-const swapHandler = (
-  socket: Socket,
-  data: {
-    team: team;
-    swapNumber: [1 | 2 | 3 | 4 | 5, 1 | 2 | 3 | 4 | 5];
-  }
-) => {
+const swapHandler = (socket: Socket, data: swapData) => {
   const id = getGameInfoId(socket);
   const { ans } = bpData.getGameInfo(id);
   const { team, swapNumber } = data;
@@ -326,9 +306,9 @@ io.on("connection", (socket) => {
     //console.log(data);
     socket.emit("dd", data);
   });
-  socket.on("join", (data) => joinChecker(socket, data));
-  socket.on("ready", (data) => readyChcker(socket, data));
-  socket.on("complete", (data) => completeHandler(socket, data));
-  socket.on("select", (data) => selectHandler(socket, data));
-  socket.on("swap", (data) => swapHandler(socket, data));
+  socket.on(eventType.join, (data) => joinChecker(socket, data));
+  socket.on(eventType.ready, (data) => readyChcker(socket, data));
+  socket.on(eventType.complete, (data) => completeHandler(socket, data));
+  socket.on(eventType.select, (data) => selectHandler(socket, data));
+  socket.on(eventType.swap, (data) => swapHandler(socket, data));
 });

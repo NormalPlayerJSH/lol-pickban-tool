@@ -8,6 +8,8 @@ export enum phase {
 
 export type team = "RED" | "BLUE" | "ALL";
 
+export type banpickNum = 1 | 2 | 3 | 4 | 5;
+
 export interface banpickTeam {
   1: number;
   2: number;
