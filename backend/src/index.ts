@@ -298,6 +298,28 @@ const selectHandler = (
   }
 };
 
+const swapHandler = (
+  socket: Socket,
+  data: {
+    team: team;
+    swapNumber: [1 | 2 | 3 | 4 | 5, 1 | 2 | 3 | 4 | 5];
+  }
+) => {
+  const id = getGameInfoId(socket);
+  const { ans } = bpData.getGameInfo(id);
+  const { team, swapNumber } = data;
+  if (ans?.status.phase === phase.SWAP) {
+    const [left, right] = swapNumber;
+    const teamPick = ans.pick[teamToSide(team)];
+    if (teamPick[left] !== 0 && teamPick[right] !== 0) {
+      let tmp = teamPick[left];
+      teamPick[left] = teamPick[right];
+      teamPick[right] = tmp;
+      statusUpdatePush(id);
+    }
+  }
+};
+
 io.on("connection", (socket) => {
   console.log(socket.id);
   socket.on("asdf", (data) => {
@@ -308,4 +330,5 @@ io.on("connection", (socket) => {
   socket.on("ready", (data) => readyChcker(socket, data));
   socket.on("complete", (data) => completeHandler(socket, data));
   socket.on("select", (data) => selectHandler(socket, data));
+  socket.on("swap", (data) => swapHandler(socket, data));
 });
