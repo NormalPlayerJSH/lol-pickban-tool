@@ -4,12 +4,12 @@ Content-Type: application/json
 {
     "names":{
         "game":"asdf",
-        "blue":"BLUETEAM",
-        "red":"REDTEAM"
+        "blue":"블루팀 테스트",
+        "red":"TEST RED Team"
     },
     "time":{
         "pick": 3,
-        "swap": 1000,
+        "swap": 100,
         "ban": 3
     }
 }

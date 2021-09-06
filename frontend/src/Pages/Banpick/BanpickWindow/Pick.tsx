@@ -1,6 +1,7 @@
 import { useBanpickSWR } from "../../../Middle/useBanpickSWR";
 import { banpickNum, team, phase } from "../../../model/data";
 import ChampMeta from "../../../model/ChampMeta";
+import { idToChampLongImg } from "../../../model/getChampImg";
 
 function Pick(props: { team: team; number: banpickNum }) {
   const { team, number } = props;
@@ -11,7 +12,7 @@ function Pick(props: { team: team; number: banpickNum }) {
   const nowStatus = banpickData.status;
   function getImg() {
     //return champs[idToChamp[data[side][pickNum].pick.id]];
-    return "";
+    return idToChampLongImg(thisData);
   }
   function getSpellImg(num: number) {
     return "";

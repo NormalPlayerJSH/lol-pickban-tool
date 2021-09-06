@@ -1,6 +1,7 @@
 import { banpickNum, team } from "../../../model/data";
 import { useBanpickSWR } from "../../../Middle/useBanpickSWR";
 import { phase } from "../../../model/data";
+import { idToChampLongImg } from "../../../model/getChampImg";
 
 function Ban(props: { team: team; number: banpickNum }) {
   const { team, number } = props;
@@ -10,7 +11,7 @@ function Ban(props: { team: team; number: banpickNum }) {
   const thisData = banpickData.ban[side][number];
   const nowStatus = banpickData.status;
   function getImg() {
-    return "";
+    return idToChampLongImg(thisData);
     //return champs[idToChamp[data[side][banNum].ban.id]];
   }
   function isDoing() {
