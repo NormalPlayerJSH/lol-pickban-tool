@@ -5,10 +5,11 @@ import { getSocket } from "../../Middle/socket";
 import Test from "./test";
 import useSWR from "swr";
 import { useBanpickSWR } from "../../Middle/useBanpickSWR";
+import BanpickWindow from "./BanpickWindow/BanpickWindow";
 
 function Banpick(RCProps: RouteComponentProps<{ code: string }>) {
   const code = RCProps.match.params.code;
-  const socket = getSocket();
+  const { socket, emitter } = getSocket();
   const { banpickData, sessionData, banpickMutate, sessionMutate } =
     useBanpickSWR();
   useEffect(() => {
@@ -22,15 +23,17 @@ function Banpick(RCProps: RouteComponentProps<{ code: string }>) {
       console.log(data);
     });
   }, []);
-  console.log(socket);
+  emitter.join(code);
+  if (sessionData === "NONE") {
+    return <div>로딩중</div>;
+  }
+  return <BanpickWindow />;
 
   return (
     <div>
       <div
         onClick={() => {
-          socket.emit("join", {
-            code,
-          });
+          emitter.join(code);
         }}
       >
         Banpick Component {`${JSON.stringify(sessionData)}`}

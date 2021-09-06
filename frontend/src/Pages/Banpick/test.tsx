@@ -3,16 +3,13 @@ import { getSocket } from "../../Middle/socket";
 import { useBanpickSWR } from "../../Middle/useBanpickSWR";
 
 function Test() {
-  const socket = getSocket();
+  const { socket, emitter } = getSocket();
   const { banpickData } = useBanpickSWR();
   return (
     <>
       <div
         onClick={() => {
-          socket.emit("ready", {
-            team: "RED",
-            isReady: true,
-          });
+          emitter.ready("RED", true);
           console.log(socket.id);
         }}
       >
@@ -20,10 +17,7 @@ function Test() {
       </div>
       <div
         onClick={() => {
-          socket.emit("ready", {
-            team: "BLUE",
-            isReady: true,
-          });
+          emitter.ready("BLUE", true);
           console.log(socket.id);
         }}
       >

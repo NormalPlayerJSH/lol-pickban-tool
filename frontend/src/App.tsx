@@ -1,13 +1,10 @@
 import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
-import io from "socket.io-client";
-import logo from "./logo.svg";
 import Banpick from "./Pages/Banpick/Banpick";
 import Create from "./Pages/Create/Create";
 import Main from "./Pages/Main/Main";
 import Join from "./Pages/Join/Join";
 import Error from "./Pages/Error/Error";
-import "./App.css";
 
 function App() {
   return (
