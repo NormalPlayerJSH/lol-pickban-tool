@@ -21,7 +21,7 @@ export interface completeData {
   status: {
     team: team;
     phase: phase;
-    number: number;
+    number: banpickNum;
   };
 }
 

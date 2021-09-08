@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { banpick } from "../../../model/data";
+import { banpick } from "../model/data";
 
 let _banpickData: banpick | null = null;
 let _sessionData: "NONE" | "RED" | "BLUE" | "OBSERVER" = "NONE";

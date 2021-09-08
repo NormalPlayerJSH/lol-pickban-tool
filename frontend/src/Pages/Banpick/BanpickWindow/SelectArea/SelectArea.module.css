@@ -1,0 +1,125 @@
+.wrapper {
+  width: 55%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.champListDiv {
+  width: 100%;
+  height: 80%;
+  background: lightgray;
+  justify-content: center;
+  align-items: center;
+}
+
+.selectChampDiv {
+  width: 100%;
+  height: 95%;
+  overflow: auto;
+  justify-content: center;
+}
+.selectChampInner {
+  width: 95%;
+  flex-wrap: wrap;
+  row-gap: 1rem;
+  column-gap: 1rem;
+  justify-content: center;
+}
+
+.champListOneChampDiv {
+  width: 11%;
+  position: relative;
+}
+
+.myturn .champListOneChampDiv {
+  cursor: pointer;
+}
+
+.champListOneChampImg {
+  width: 100%;
+}
+
+.champListOneChampBG {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #000000af;
+  z-index: 2;
+  color: #afaeae;
+  justify-content: center;
+  align-items: center;
+  word-break: keep-all;
+  text-align: center;
+}
+
+.myturn .champListOneChampDiv:hover .champListOneChampBG {
+  display: flex;
+}
+
+.usedChamp {
+  cursor: default !important;
+  font-size: 0;
+}
+
+.usedChamp .champListOneChampBG {
+  display: flex;
+}
+
+.completeDiv {
+  width: 100%;
+  height: 15%;
+  background: lightgray;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.teamText {
+  font-size: 3rem;
+  font-weight: 900;
+}
+
+.teamTextBlue {
+  color: blue;
+}
+
+.teamTextRed {
+  color: red;
+}
+
+.completeImgWrapper {
+  height: 85%;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 3rem;
+  margin-left: 3rem;
+}
+
+.completeImg {
+  height: 100%;
+  transform: scale(1.2);
+}
+
+.completeBtn {
+  height: 50%;
+  background: gray;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  border-radius: 1rem;
+}
+
+.buttonOn {
+  background: orange;
+  color: black;
+  cursor: pointer;
+}
+
+.completeBtnText {
+  font-size: 2rem;
+  font-weight: 900;
+}

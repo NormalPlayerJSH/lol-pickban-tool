@@ -21,6 +21,11 @@ function ScoreBoard() {
   if (!banpickData) {
     return <div></div>;
   }
+  const getTeamName = (side: "red" | "blue") => {
+    const teamName = banpickData.setting.names[side];
+    const isWait = !banpickData.status.isReady[side];
+    return `${teamName}${isWait ? " (준비중)" : ""}`;
+  };
   return (
     <div className={`scoreboard` + (false ? " use-score" : "")}>
       <div className="board-team board-blue">
@@ -32,9 +37,7 @@ function ScoreBoard() {
           </div>
         </div>
         <div className="board-team-name">
-          <div className="board-team-name-text">
-            {banpickData?.setting.names.blue}
-          </div>
+          <div className="board-team-name-text">{getTeamName("blue")}</div>
         </div>
       </div>
       <div className="board-time">
@@ -49,9 +52,7 @@ function ScoreBoard() {
           </div>
         </div>
         <div className="board-team-name">
-          <div className="board-team-name-text">
-            {banpickData.setting.names.red}
-          </div>
+          <div className="board-team-name-text">{getTeamName("red")}</div>
         </div>
       </div>
     </div>

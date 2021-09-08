@@ -32,6 +32,9 @@ export interface banpick {
       red: boolean;
     };
   };
+  alreadyUsed: {
+    [x: number]: boolean;
+  };
   pick: {
     blue: banpickTeam;
     red: banpickTeam;
