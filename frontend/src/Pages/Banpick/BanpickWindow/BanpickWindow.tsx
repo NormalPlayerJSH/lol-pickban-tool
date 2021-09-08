@@ -1,6 +1,6 @@
 import React from "react";
 import ScoreBoard from "./ScoreBoard";
-import BanPick from "./BanPick";
+import BanPick from "./BanPick/BanPick";
 import SelectArea from "./SelectArea/SelectArea";
 
 function BanpickWindow() {

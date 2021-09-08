@@ -1,0 +1,89 @@
+.smallPicks {
+  width: 100%;
+  flex-direction: column;
+  position: relative;
+  transition: height 1s;
+}
+
+.phaseDefault .pickTop {
+  height: 60%;
+}
+
+.phaseDefault .pickBottom {
+  height: 40%;
+}
+
+.phaseFirst .pickTop {
+  height: 70%;
+}
+
+.phaseFirst .pickBottom {
+  height: 30%;
+}
+
+.phaseLast .pickTop {
+  height: 45%;
+}
+
+.phaseLast .pickBottom {
+  height: 55%;
+}
+
+.pick {
+  position: relative;
+  width: 100%;
+}
+
+.pickTop .pick {
+  height: 33.3333333333%;
+}
+
+.pickBottom .pick {
+  height: 50%;
+}
+
+.swapDiv {
+  display: none;
+  z-index: 10;
+  height: 100%;
+  align-items: center;
+}
+
+.showSwap {
+  display: flex;
+}
+
+.red .swapDiv {
+  justify-content: flex-end;
+}
+
+.swapBtn {
+  height: 4rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  align-items: center;
+  border-style: solid;
+  border-color: white;
+  border-width: 0.2rem;
+  border-radius: 50%;
+  cursor: pointer;
+  background: #00000070;
+}
+
+.blue .swapBtn {
+  margin-left: 0.5rem;
+}
+.red .swapBtn {
+  margin-right: 0.5rem;
+}
+
+.blue .clickedSwap .swapBtn {
+  background: #0000ffa0;
+}
+.red .clickedSwap .swapBtn {
+  background: #ff0000a0;
+}
+
+.swapSVG {
+  justify-content: center;
+}

@@ -147,12 +147,6 @@ body,
   flex-direction: column;
 }
 
-.pick {
-  height: 20%;
-  width: 100%;
-  position: relative;
-}
-
 .pick-child,
 .ban-child {
   width: 100%;

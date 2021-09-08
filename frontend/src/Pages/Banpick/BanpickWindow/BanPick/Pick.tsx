@@ -1,11 +1,17 @@
-import { useBanpickSWR } from "../../../Middle/useBanpickSWR";
-import { banpickNum, team, phase } from "../../../model/data";
-import ChampMeta from "../../../model/ChampMeta";
-import { idToChampLongImg } from "../../../model/getChampImg";
+import { useBanpickSWR } from "../../../../Middle/useBanpickSWR";
+import { banpickNum, team, phase } from "../../../../model/data";
+import ChampMeta from "../../../../model/ChampMeta";
+import { idToChampLongImg } from "../../../../model/getChampImg";
+import styles from "./BanPick.module.css";
 
-function Pick(props: { team: team; number: banpickNum }) {
-  const { team, number } = props;
-  const { banpickData } = useBanpickSWR();
+function Pick(props: {
+  team: team;
+  number: banpickNum;
+  swapClick: (num: banpickNum) => void;
+  swapNum: number;
+}) {
+  const { team, number, swapClick, swapNum } = props;
+  const { banpickData, sessionData } = useBanpickSWR();
   if (!banpickData) return <div />;
   const side = team === "BLUE" ? "blue" : "red";
   const thisData = banpickData?.pick[side][number];
@@ -34,16 +40,20 @@ function Pick(props: { team: team; number: banpickNum }) {
     return ChampMeta[thisData].name;
   }
   function getUserName() {
-    return "";
+    return "가나다라마바사";
     //return data[side][pickNum].name;
   }
   function isShow(name: string) {
     if (name === "champName") return true;
+    if (name === "swap") {
+      return banpickData?.status.phase === phase.SWAP && team === sessionData;
+    }
+    if (name === "userName") return true;
     return false;
   }
 
   return (
-    <div className={side + " pick"}>
+    <div className={`${side} pick ${styles[side]} ${styles.pick}`}>
       <div
         className={
           "pick-child champ-img" + (isNotSelected() ? " not-selected" : "")
@@ -90,6 +100,24 @@ function Pick(props: { team: team; number: banpickNum }) {
       <div className={"pick-child now" + (isDoing() ? " doing" : "")}>
         <div className="blink"></div>
         <div className="dark"></div>
+      </div>
+      <div
+        className={`${styles.swapDiv} ${
+          swapNum === number ? styles.clickedSwap : ""
+        } ${isShow("swap") ? styles.showSwap : ""} pick-child`}
+      >
+        <div className={styles.swapBtn} onClick={() => swapClick(number)}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="3rem"
+            viewBox="0 0 24 24"
+            width="3rem"
+            fill="white"
+          >
+            <path d="M0 0h24v24H0V0z" fill="none" />
+            <path d="M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z" />
+          </svg>
+        </div>
       </div>
     </div>
   );

@@ -8,8 +8,8 @@ Content-Type: application/json
         "red":"TEST RED Team"
     },
     "time":{
-        "pick": 100,
-        "swap": 100,
-        "ban": 100
+        "pick": 3,
+        "swap": 1000,
+        "ban": 3
     }
 }

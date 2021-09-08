@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent, useState } from "react";
 import styles from "./SelectArea.module.css";
 import ChampMeta, {
   sortedList,
@@ -17,11 +17,12 @@ const getChampionImage = (key: string | number) => {
 };
 
 function SelectAreaOneChamp(props: {
-  champ: ChampData;
+  champNum: number;
   listen: (champ: ChampData) => void;
   isUsed: (champ: ChampData) => boolean;
 }) {
-  const { champ, listen, isUsed } = props;
+  const { champNum, listen, isUsed } = props;
+  const champ = ChampMeta[champNum];
   const isUsedValue = isUsed(champ);
   if (champ.key === "0") return <></>;
   return (
@@ -33,13 +34,15 @@ function SelectAreaOneChamp(props: {
         if (!isUsedValue) listen(champ);
       }}
     >
-      <img
-        className={styles.champListOneChampImg}
-        src={getChampionImage(champ.key)}
-        alt=""
-      />
-      <div className={styles.champListOneChampBG}>
-        <div className={styles.champListChampName}>{champ.name}</div>
+      <div className={styles.champListOneChampInner}>
+        <img
+          className={styles.champListOneChampImg}
+          src={getChampionImage(champ.key)}
+          alt=""
+        />
+        <div className={styles.champListOneChampBG}>
+          <div className={styles.champListChampName}>{champ.name}</div>
+        </div>
       </div>
     </div>
   );
@@ -47,6 +50,10 @@ function SelectAreaOneChamp(props: {
 
 function SelectArea() {
   const { banpickData, sessionData } = useBanpickSWR();
+  const [ChampList, setChampList] = useState<number[]>(
+    sortedList as unknown as number[]
+  );
+  const [LastSearchTime, setLastSearchTime] = useState<number>(-1);
   const { emitter } = getSocket();
   if (!banpickData || !sessionData || sessionData === "NONE") return <> </>;
   const { status, alreadyUsed } = banpickData;
@@ -100,17 +107,41 @@ function SelectArea() {
     if (alreadyUsed[champ.key as unknown as number]) return true;
     return false;
   };
+  const doChampSearch = (value: string) => {
+    setLastSearchTime(Date.now());
+    const searchValue = value.replace(/\s+/g, "");
+    console.log(searchValue);
+    setChampList(
+      sortedList.filter((value: string) =>
+        ChampMeta[value as unknown as number].name
+          .replace(/\s+/g, "")
+          .startsWith(searchValue)
+      ) as unknown as number[]
+    );
+  };
+  const searchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+    doChampSearch(e.target.value);
+  };
   console.log(alreadyUsed);
   return (
     <div className={`${styles.wrapper} ${isMyTurn ? styles.myturn : ""}`}>
       <div className={styles.champListDiv}>
+        <div className={styles.champSearchDiv}>
+          <input
+            type="text"
+            onChange={searchInputChange}
+            className={styles.champSearchInput}
+            placeholder="챔피언 검색"
+          />
+        </div>
         <div className={styles.selectChampDiv}>
           <div className={styles.selectChampInner}>
-            {sortedList.map((champ) => (
+            {ChampList.map((champNum) => (
               <SelectAreaOneChamp
-                champ={champ}
+                champNum={champNum as unknown as number}
                 listen={champOnClick}
-                key={champ.key}
+                key={champNum}
                 isUsed={isUsed}
               />
             ))}

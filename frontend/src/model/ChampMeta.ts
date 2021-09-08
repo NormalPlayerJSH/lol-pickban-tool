@@ -166,15 +166,13 @@ export const ChampMeta: { [x: number]: ChampData } = {
   887: { id: "Gwen", key: "887", name: "그웬" },
 };
 
-export const sortedList = Object.keys(ChampMeta)
-  .sort((l, r) => {
-    if (
-      ChampMeta[l as unknown as number].name >
-      ChampMeta[r as unknown as number].name
-    )
-      return 1;
-    return -1;
-  })
-  .map((num) => ChampMeta[num as unknown as number]);
+export const sortedList = Object.keys(ChampMeta).sort((l, r) => {
+  if (
+    ChampMeta[l as unknown as number].name >
+    ChampMeta[r as unknown as number].name
+  )
+    return 1;
+  return -1;
+});
 
 export default ChampMeta;
