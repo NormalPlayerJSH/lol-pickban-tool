@@ -88,7 +88,6 @@ const isSameStatus = (
 };
 
 const setRandomChamp = (gameInfo: banpick, team: team, number: number) => {
-  const used: number[] = [];
   const lis: banpickNum[] = [1, 2, 3, 4, 5];
   const pickban: ("pick" | "ban")[] = ["pick", "ban"];
   const side: ("red" | "blue")[] = ["red", "blue"];
@@ -106,19 +105,9 @@ const setRandomChamp = (gameInfo: banpick, team: team, number: number) => {
     const numberSame = num === status.number;
     return actionSame && sideSame && numberSame;
   };
-  lis.map((num) => {
-    pickban.map((action) => {
-      side.map((actionSide) => {
-        const championId = gameInfo[action][actionSide][num];
-        if (!isSamePhase(action, actionSide, num) && championId != 0) {
-          used.push(championId);
-        }
-      });
-    });
-  });
   while (true) {
     randomChamp = getRandomElement(champList);
-    if (randomChamp != 0 && !(randomChamp in used)) break;
+    if (randomChamp != 0 && !gameInfo.alreadyUsed[randomChamp]) break;
   }
   gameInfo.pick[teamToSide(team)][number as banpickNum] = randomChamp;
 };
