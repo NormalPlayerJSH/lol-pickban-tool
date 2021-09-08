@@ -42,7 +42,7 @@ export class banpickData {
           red: false,
         },
       },
-      alreadyUsed: [],
+      alreadyUsed: {},
       pick: {
         blue: {
           1: 0,

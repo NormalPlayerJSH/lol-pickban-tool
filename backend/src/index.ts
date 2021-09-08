@@ -141,6 +141,13 @@ function goNextTurn(gameInfo: banpick) {
     status.team = team;
     status.number = number;
   };
+  if (status.phase === phase.BAN || status.phase === phase.PICK) {
+    const nowChamp =
+      gameInfo[status.phase === phase.BAN ? "ban" : "pick"][
+        status.team === "BLUE" ? "blue" : "red"
+      ][status.number as banpickNum];
+    gameInfo.alreadyUsed[nowChamp] = true;
+  }
   if (status.phase === phase.END) {
     return;
   } else if (status.phase === phase.WAIT) {
@@ -259,7 +266,7 @@ const completeHandler = (socket: customSocket, data: completeData) => {
           ans[status.phase === phase.BAN ? "ban" : "pick"][
             status.team === "BLUE" ? "blue" : "red"
           ][status.number];
-        ans.alreadyUsed[nowChamp] = true;
+        if (nowChamp === 0) return;
       }
       goNextTurn(ans);
       statusUpdatePush(id);
