@@ -1,6 +1,6 @@
 import { randomFirst, randomLast } from "./randomNameList";
 import getRandomElement from "./random";
-import { code } from "../../../model/data";
+import { code } from "../../../frontend/src/model/data";
 
 export class randomName {
   firstToNum: { [x: string]: number } = {};

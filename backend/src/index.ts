@@ -3,8 +3,14 @@ import http from "http";
 import { Server, Socket } from "socket.io";
 import { banpickData } from "./middle/dataClass";
 import { json as bpJSON } from "body-parser";
-import ChampMeta from "../../model/ChampMeta";
-import { banpick, code, phase, team, banpickNum } from "../../model/data";
+import ChampMeta from "../../frontend/src/model/ChampMeta";
+import {
+  banpick,
+  code,
+  phase,
+  team,
+  banpickNum,
+} from "../../frontend/src/model/data";
 import {
   eventType,
   joinData,
@@ -12,7 +18,7 @@ import {
   completeData,
   selectData,
   swapData,
-} from "../../model/socketEvent";
+} from "../../frontend/src/model/socketEvent";
 import getRandomElement from "./middle/random";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 const app = express();
@@ -259,6 +265,13 @@ const completeHandler = (socket: customSocket, data: completeData) => {
   if (ans) {
     const { status: newStatus } = ans;
     if (isSameStatus(status, newStatus)) {
+      if (status.phase === phase.BAN || status.phase === phase.PICK) {
+        const nowChamp =
+          ans[status.phase === phase.BAN ? "ban" : "pick"][
+            status.team === "BLUE" ? "blue" : "red"
+          ][status.number];
+        ans.alreadyUsed[nowChamp] = true;
+      }
       goNextTurn(ans);
       statusUpdatePush(id);
     }
@@ -275,7 +288,7 @@ const selectHandler = (socket: customSocket, data: selectData) => {
       phase: statusPhase,
       number: statusNumber,
     } = status;
-    if (isSameStatus(status, ans.status)) {
+    if (isSameStatus(status, ans.status) && !ans.alreadyUsed[championId]) {
       const action = statusPhase === phase.BAN ? "ban" : "pick";
       ans[action][teamToSide(statusTeam)][statusNumber as banpickNum] =
         championId;

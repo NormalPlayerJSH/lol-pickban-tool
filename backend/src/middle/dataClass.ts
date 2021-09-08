@@ -1,4 +1,9 @@
-import { banpick, banpicks, gameSetting, phase } from "../../../model/data";
+import {
+  banpick,
+  banpicks,
+  gameSetting,
+  phase,
+} from "../../../frontend/src/model/data";
 import crypto from "crypto";
 import { randomName } from "./randomName";
 
@@ -37,6 +42,7 @@ export class banpickData {
           red: false,
         },
       },
+      alreadyUsed: [],
       pick: {
         blue: {
           1: 0,
@@ -76,8 +82,8 @@ export class banpickData {
       id,
       team: "OBSERVER",
     });
-    const blueCode = this.randomName.getRandomCode({ id, team: "RED" });
-    const redCode = this.randomName.getRandomCode({ id, team: "BLUE" });
+    const blueCode = this.randomName.getRandomCode({ id, team: "BLUE" });
+    const redCode = this.randomName.getRandomCode({ id, team: "RED" });
     return {
       observerCode,
       blueCode,
