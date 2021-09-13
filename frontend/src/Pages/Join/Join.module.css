@@ -1,0 +1,22 @@
+.joinContent {
+  font-size: 3rem;
+  color: #eaeaea;
+}
+
+.inputNBtn {
+  width: 100%;
+  height: 10%;
+  margin-top: 8%;
+  justify-content: space-around;
+  margin-bottom: 10%;
+}
+
+.joinInput {
+  width: 70%;
+}
+
+.joinBtn {
+  width: 20%;
+  height: 100%;
+  font-size: 3rem;
+}
