@@ -1,0 +1,9 @@
+.btn {
+  width: 50%;
+  height: 10%;
+  margin-top: 3rem;
+}
+
+.btn:last-child {
+  margin-bottom: 10%;
+}

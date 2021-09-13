@@ -24,8 +24,8 @@ Content-Type: application/json
         }
     },
     "time":{
-        "pick": 3,
+        "pick": 30,
         "swap": 30,
-        "ban": 3
+        "ban": 30
     }
 }
