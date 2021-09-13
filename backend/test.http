@@ -4,12 +4,28 @@ Content-Type: application/json
 {
     "names":{
         "game":"asdf",
-        "blue":"블루팀 테스트",
-        "red":"TEST RED Team"
+        "blue":"DWG KIA",
+        "red":"농심 레드포스",
+        "member":{
+            "blue":{
+                "1":"Khan",
+                "2":"Canyon",
+                "3":"ShowMaker",
+                "4":"Ghost",
+                "5":"BeryL"
+            },
+            "red":{
+                "1":"Rich",
+                "2":"Peanut",
+                "3":"Gori",
+                "4":"deokdam",
+                "5":"Kellin"
+            }
+        }
     },
     "time":{
         "pick": 3,
-        "swap": 1000,
+        "swap": 30,
         "ban": 3
     }
 }

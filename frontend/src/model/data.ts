@@ -59,6 +59,22 @@ export interface gameSetting {
     game: string;
     blue: string;
     red: string;
+    member: {
+      blue: {
+        1: string;
+        2: string;
+        3: string;
+        4: string;
+        5: string;
+      };
+      red: {
+        1: string;
+        2: string;
+        3: string;
+        4: string;
+        5: string;
+      };
+    };
   };
   time: {
     pick: number;

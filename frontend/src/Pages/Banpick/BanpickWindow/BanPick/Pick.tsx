@@ -40,8 +40,7 @@ function Pick(props: {
     return ChampMeta[thisData].name;
   }
   function getUserName() {
-    return "가나다라마바사";
-    //return data[side][pickNum].name;
+    return banpickData?.setting.names.member[side][number];
   }
   function isShow(name: string) {
     if (name === "champName") return true;
