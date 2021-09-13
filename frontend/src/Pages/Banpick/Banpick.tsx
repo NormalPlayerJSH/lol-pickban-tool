@@ -18,6 +18,9 @@ function Banpick(RCProps: RouteComponentProps<{ code: string }>) {
       banpickMutate(data.info);
       console.log(data);
     });
+    return () => {
+      socket.disconnect();
+    };
   }, []);
   emitter.join(code);
   if (sessionData === "NONE") {

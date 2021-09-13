@@ -10,9 +10,13 @@ function Join(RCProps: RouteComponentProps) {
   const [TextInput, inputValue] = useTextInput({
     className: styles.joinInput,
     innerText: "입장 코드 입력 (ex. 승리의 케이틀린)",
+    onEnter: (event) => {
+      if (inputValue.trim().length !== 0) join();
+    },
   });
   const join = () => {
-    RCProps.history.push(`/banpick/${inputValue.trim()}`);
+    window.location.href = `/banpick/${inputValue.trim()}`;
+    //RCProps.history.push(`/banpick/${inputValue.trim()}`);
   };
   return (
     <>
