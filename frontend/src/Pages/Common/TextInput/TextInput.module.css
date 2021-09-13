@@ -2,9 +2,15 @@
   background: none;
   text-align: center;
   border: none;
-  border-bottom: solid 0.5rem orange;
   font-size: 3rem;
+  border-bottom: solid 0.5rem orange;
   color: white;
+  transition: border-color 0.3s;
+}
+
+.inputElem:focus {
+  outline: none;
+  border-bottom: solid 0.5rem skyblue;
 }
 
 .inputElem::placeholder {
