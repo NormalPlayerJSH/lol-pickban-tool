@@ -1,0 +1,21 @@
+.div {
+  width: 100%;
+  height: 1000%;
+  justify-content: center;
+  align-items: center;
+  background: #2f323b;
+}
+
+.inner {
+  width: 70%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.mainTitle {
+  font-size: 4.5rem;
+  color: #eaeaea;
+  font-weight: 800;
+}
