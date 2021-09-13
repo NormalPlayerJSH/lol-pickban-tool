@@ -1,0 +1,8 @@
+.btnDiv {
+  background: orange;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  font-size: 3rem;
+}

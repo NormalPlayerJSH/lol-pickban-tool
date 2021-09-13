@@ -1,0 +1,12 @@
+.inputElem {
+  background: none;
+  text-align: center;
+  border: none;
+  border-bottom: solid 0.5rem orange;
+  font-size: 3rem;
+  color: white;
+}
+
+.inputElem::placeholder {
+  color: darkgray;
+}
