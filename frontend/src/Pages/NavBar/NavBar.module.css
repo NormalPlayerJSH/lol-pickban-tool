@@ -1,0 +1,42 @@
+.NavBarDiv {
+  width: 100%;
+  height: 4rem;
+  background: #191c20;
+  justify-content: center;
+}
+
+.inner {
+  width: 70%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoNTitle {
+  height: 100%;
+  align-items: center;
+  cursor: pointer;
+}
+
+.logo {
+  height: 65.7%;
+}
+
+.title {
+  padding-left: 1rem;
+}
+
+.navText {
+  color: white;
+  padding-top: 0.7rem;
+  font-size: 2rem;
+}
+
+.navLink {
+  padding-left: 2rem;
+  cursor: pointer;
+}
+
+.navLink:hover {
+  color: orange;
+}
