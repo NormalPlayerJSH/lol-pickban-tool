@@ -1,0 +1,35 @@
+.div {
+  width: 100%;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.btn {
+  width: 50%;
+  height: 10rem;
+}
+
+.left {
+  background: skyblue;
+}
+
+.right {
+  background: crimson;
+}
+
+.img {
+  width: 140%;
+}
+
+.mirror .img {
+  transform: scaleX(-1);
+}
+
+.id {
+  width: 100%;
+  text-align: center;
+  color: black;
+  font-size: 4rem;
+  justify-content: center;
+  align-items: center;
+}

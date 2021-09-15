@@ -239,6 +239,14 @@ body,
   transform: scale(1.5);
 }
 
+.pick.mirror .champ-img img {
+  transform: scaleX(-1.5) scaleY(1.5);
+}
+
+.ban.mirror .champ-img img {
+  transform: scaleX(-1.5) scaleY(1.5);
+}
+
 .ban-child.champ-img > img {
   transform: scale(1.3);
 }

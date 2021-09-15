@@ -1,6 +1,6 @@
 import { useBanpickSWR } from "../../../../Middle/useBanpickSWR";
 import { banpickNum, team, phase } from "../../../../model/data";
-import ChampMeta from "../../../../model/ChampMeta";
+import ChampMeta, { champWatching } from "../../../../model/ChampMeta";
 import { idToChampLongImg } from "../../../../model/getChampImg";
 import styles from "./BanPick.module.css";
 
@@ -50,9 +50,20 @@ function Pick(props: {
     if (name === "userName") return true;
     return false;
   }
+  function isMirror() {
+    const watching = champWatching[thisData];
+    if (
+      (side === "blue" && watching === "left") ||
+      (side === "red" && watching === "right")
+    )
+      return "mirror";
+    return "";
+  }
 
   return (
-    <div className={`${side} pick ${styles[side]} ${styles.pick}`}>
+    <div
+      className={`${side} pick ${styles[side]} ${styles.pick} ${isMirror()}`}
+    >
       <div
         className={
           "pick-child champ-img" + (isNotSelected() ? " not-selected" : "")
