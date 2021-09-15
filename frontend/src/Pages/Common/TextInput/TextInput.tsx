@@ -10,11 +10,14 @@ function useTextInput(_setting?: {
   initialValue?: string;
   innerText?: string;
   className?: string;
+  isEditable?: boolean;
+  doTrim?: boolean;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   onEnter?: (event: KeyboardEvent<HTMLInputElement>) => void;
-}): [ReactElement, string] {
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+}): [ReactElement, string, React.Dispatch<React.SetStateAction<string>>] {
   const checkDefault = <T,>(toCheck: T | undefined, defaultValue: T) => {
-    if (toCheck) return toCheck;
+    if (toCheck || typeof toCheck === "boolean") return toCheck;
     return defaultValue;
   };
   const setting = checkDefault(_setting, {});
@@ -22,10 +25,12 @@ function useTextInput(_setting?: {
   const [TextValue, setTextValue] = useState(initialValue);
   const innerText = checkDefault(setting.innerText, "");
   const className = checkDefault(setting.className, "");
+  const isEditable = checkDefault(setting.isEditable, true);
   const paramOnChange = checkDefault(setting.onChange, () => {});
   const paramOnEnter = checkDefault(setting.onEnter, () => {});
+  const paramOnBlur = checkDefault(setting.onBlur, () => {});
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTextValue(event.target.value);
+    if (isEditable) setTextValue(event.target.value);
     paramOnChange(event);
   };
   const onEnter = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -34,15 +39,19 @@ function useTextInput(_setting?: {
     }
   };
   return [
-    <input
-      type="text"
-      placeholder={innerText}
-      className={`${className} ${styles.inputElem}`}
-      value={TextValue}
-      onChange={onChange}
-      onKeyPress={onEnter}
-    />,
+    <div className={`${className} ${styles.inputDiv}`}>
+      <input
+        type="text"
+        className={`${styles.inputElem}`}
+        value={TextValue}
+        onChange={onChange}
+        onKeyPress={onEnter}
+        onBlur={paramOnBlur}
+      />
+      <div className={styles.inputLabelDiv}>{innerText}</div>
+    </div>,
     TextValue,
+    setTextValue,
   ];
 }
 
