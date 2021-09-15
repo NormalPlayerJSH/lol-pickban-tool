@@ -5,6 +5,8 @@ import Create from "./Pages/Create/Create";
 import Main from "./Pages/Main/Main";
 import Join from "./Pages/Join/Join";
 import Error from "./Pages/Error/Error";
+import CreateComplete from "./Pages/CreateComplete/CreateComplete";
+import Test from "./Pages/Test/Test";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
         <Route path="/join" component={Join} exact />
         <Route path="/create" component={Create} exact />
         <Route path="/banpick/:code" component={Banpick} exact />
+        <Route path="/createcomplete" component={CreateComplete} exact />
+        <Route path="/test" component={Test} exact />
         <Route component={Error} />
       </Switch>
     </div>

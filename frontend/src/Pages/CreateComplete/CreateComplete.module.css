@@ -1,0 +1,48 @@
+.explain {
+  margin-top: 3rem;
+  width: 80%;
+  color: orange;
+  font-size: 3rem;
+  word-break: keep-all;
+  text-align: center;
+}
+
+.copyBtn {
+  margin-top: 3rem;
+  width: 80%;
+  height: 6rem;
+}
+
+.linksDiv {
+  padding-top: 3rem;
+  width: 100%;
+  flex-direction: column;
+  row-gap: 3rem;
+}
+.oneLinkDiv {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.oneCodeInput {
+  width: 30%;
+  height: 7rem;
+}
+
+.oneCodeInput input {
+  margin-top: 1rem;
+}
+
+.oneLinkInput {
+  width: 50%;
+  height: 7rem;
+}
+
+.oneLinkInput input {
+  margin-top: 1rem;
+  font-size: 2rem;
+}
+
+.oneLinkButton {
+  width: 15%;
+}

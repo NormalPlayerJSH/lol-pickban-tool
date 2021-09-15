@@ -3,7 +3,7 @@ import styles from "./NavBar.module.css";
 import logo from "./LOLGO_logo_inline.png";
 import { RouteComponentProps } from "react-router";
 
-type linkType = "join" | "create" | "main" | "error";
+type linkType = "join" | "create" | "main" | "createcomplete" | "error";
 
 function NavBar(props: { RCProps: RouteComponentProps; from: linkType }) {
   const { RCProps, from } = props;
