@@ -244,7 +244,7 @@ body,
 }
 
 .ban.mirror .champ-img img {
-  transform: scaleX(-1.5) scaleY(1.5);
+  transform: scaleX(-1.3) scaleY(1.3);
 }
 
 .ban-child.champ-img > img {
