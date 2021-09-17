@@ -25,8 +25,9 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 const port = process.env.PORT || 5000;
-const bpData = new banpickData();
+let bpData = new banpickData();
 const rName = bpData.randomName;
+const checkInterval = 60 * 60 * 1000;
 
 const champList = Object.keys(ChampMeta).map((key) => parseInt(key));
 
@@ -49,6 +50,7 @@ app.use(bpJSON());
 
 app.get("/api", (req, res) => {
   res.json({ data: "Hello, World!" });
+  bpData.deleteClean();
 });
 
 app.post("/creategame", (req, res) => {
@@ -60,6 +62,9 @@ app.post("/creategame", (req, res) => {
 
 server.listen(port, () => {
   console.log(`Listening on port ${port}`);
+  setInterval(() => {
+    bpData.deleteClean();
+  }, checkInterval);
 });
 
 const teamToSide = (team: team) => {
@@ -227,7 +232,7 @@ const joinChecker = (socket: customSocket, data: joinData) => {
         ans: ans,
         info: info.ans,
       });
-      console.log(socket.gameInfoId);
+      //console.log(socket.gameInfoId);
     }
   }
 };
@@ -310,7 +315,7 @@ const swapHandler = (socket: Socket, data: swapData) => {
 };
 
 io.on("connection", (socket) => {
-  console.log(socket.id);
+  //console.log(socket.id);
   socket.on("asdf", (data) => {
     //console.log(data);
     socket.emit("dd", data);

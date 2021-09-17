@@ -1,6 +1,7 @@
 import { randomFirst, randomLast } from "./randomNameList";
 import getRandomElement from "./random";
 import { code } from "../../../frontend/src/model/data";
+import { banpickData } from "./dataClass";
 
 export class randomName {
   firstToNum: { [x: string]: number } = {};
@@ -67,5 +68,23 @@ export class randomName {
     return {
       ans: answer,
     };
+  }
+  randomClean(instance: banpickData) {
+    randomFirst.map((firstString) => {
+      const firstNum = this.firstToNum[firstString];
+      const firstData = this.data[firstNum];
+      randomLast.map((lastString) => {
+        const lastNum = this.lastToNum[lastString];
+        const data = firstData[lastNum];
+        const { id } = data;
+        if (id !== "") {
+          const isExist = instance.checkGame(id);
+          if (!isExist) {
+            data.id = "";
+            //console.log(`${firstString} ${lastString} ${id} 삭제`);
+          } //else console.log(`${firstString} ${lastString} ${id} 유지`);
+        }
+      });
+    });
   }
 }

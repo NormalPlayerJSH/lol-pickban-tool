@@ -10,6 +10,8 @@ import { randomName } from "./randomName";
 export class banpickData {
   data: banpicks = {};
   randomName: randomName;
+  oneDayMS = 1; //24 * 60 * 60 * 1000;
+  twoDayMS = 2099999999; //this.oneDayMS * 2;
   constructor() {
     this.randomName = new randomName();
   }
@@ -77,7 +79,7 @@ export class banpickData {
       },
     };
     this.data[id] = newGame;
-    console.log(newGame);
+    //console.log(newGame);
     const observerCode = this.randomName.getRandomCode({
       id,
       team: "OBSERVER",
@@ -95,5 +97,27 @@ export class banpickData {
       return { err: "해당 게임을 찾을 수 없습니다." };
     }
     return { ans: this.data[id] };
+  }
+  checkGame(id: string) {
+    if (!(id in this.data)) {
+      return false;
+    }
+    const data = this.data[id];
+    const delta = Date.now() - data.date;
+    if (
+      delta >= this.twoDayMS ||
+      (data.status.phase === phase.END && delta >= this.oneDayMS)
+    ) {
+      delete this.data[id];
+      return false;
+    }
+    return true;
+  }
+  deleteClean() {
+    //console.log(Object.keys(this.data));
+    //console.log(this.randomName);
+    this.randomName.randomClean(this);
+    //console.log(Object.keys(this.data));
+    //console.log(this.randomName);
   }
 }
