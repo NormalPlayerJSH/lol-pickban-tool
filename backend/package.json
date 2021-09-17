@@ -6,7 +6,10 @@
   "scripts": {
     "start": "nodemon --exec ts-node src/index.ts",
     "champImg": "npm run removeTemp; rm -rf ../frontend/public/champImg; mkdir ./util/beforeCrop; mkdir ./util/afterCrop; tsc util/getChampImg.ts && node util/getChampImg.js && cp -r ./util/afterCrop ../frontend/public && mv ../frontend/public/afterCrop ../frontend/public/champImg; npm run removeTemp",
-    "removeTemp": "rm -rf ./util/afterCrop; rm -rf ./util/beforeCrop; rm -rf ./util/getChampImg.js"
+    "removeTemp": "rm -rf ./util/afterCrop; rm -rf ./util/beforeCrop; rm -rf ./util/getChampImg.js",
+    "removeBeforeBuild": "rm -rf ./dist; rm -rf ../frontend/public/build",
+    "buildThis": "tsc --build",
+    "build": "npm run removeBeforeBuild; npm run buildThis && npm run build --prefix ../frontend && cp -r ../frontend/build ./dist/frontend/build"
   },
   "keywords": [],
   "author": "",
