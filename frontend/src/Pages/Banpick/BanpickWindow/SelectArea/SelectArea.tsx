@@ -110,7 +110,7 @@ function SelectArea() {
   const doChampSearch = (value: string) => {
     setLastSearchTime(Date.now());
     const searchValue = value.replace(/\s+/g, "");
-    console.log(searchValue);
+    //console.log(searchValue);
     setChampList(
       sortedList.filter((value: string) =>
         ChampMeta[value as unknown as number].name
@@ -120,10 +120,10 @@ function SelectArea() {
     );
   };
   const searchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+    //console.log(e.target.value);
     doChampSearch(e.target.value);
   };
-  console.log(alreadyUsed);
+  //console.log(alreadyUsed);
   return (
     <div className={`${styles.wrapper} ${isMyTurn ? styles.myturn : ""}`}>
       <div className={styles.champListDiv}>
