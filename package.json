@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run build --prefix ./backend",
-    "start": "node ./backend/dist/backend/src/index.js",
+    "start": "pm2 start ./backend/dist/backend/src/index.js",
     "prod": "npm run build && npm run start",
     "install": "npm install --prefix ./backend; npm install --prefix ./frontend"
   },
