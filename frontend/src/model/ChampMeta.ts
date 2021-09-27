@@ -4,7 +4,7 @@ export interface ChampData {
   name: string;
 }
 
-export const currentVersion = "11.17.1";
+export const currentVersion = "11.19.1";
 
 export const ChampMeta: { [x: number]: ChampData } = {
   0: { id: "None", key: "0", name: "선택하지 않음" },
