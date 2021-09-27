@@ -10,8 +10,8 @@ import { randomName } from "./randomName";
 export class banpickData {
   data: banpicks = {};
   randomName: randomName;
-  oneDayMS = 1; //24 * 60 * 60 * 1000;
-  twoDayMS = 2099999999; //this.oneDayMS * 2;
+  oneDayMS = 24 * 60 * 60 * 1000;
+  twoDayMS = this.oneDayMS * 2;
   constructor() {
     this.randomName = new randomName();
   }
