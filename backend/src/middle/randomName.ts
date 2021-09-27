@@ -47,7 +47,7 @@ export class randomName {
     const lis = code.split(" ");
     if (lis.length !== 2) {
       return {
-        err: "띄어쓰기가 잘못됐습니다.",
+        err: "띄어쓰기가 잘못됐습니다. 코드 형식은 수식어와 챔피언 이름 두 단어입니다.",
       };
     }
     const firstStr = lis[0];
